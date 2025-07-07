@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER:     ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  common-migrate:
+    build:
+      context: .
+      dockerfile: common/Dockerfile
+    container_name: common-migrate
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    restart: "no"
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    container_name: auth-service
+    env_file:
+      - .env
+    ports:
+      - "8092:8090"
+    depends_on:
+      - common-migrate
+    restart: unless-stopped
+
+  customer-service:
+    build:
+      context: .
+      dockerfile: customer-service/Dockerfile
+    container_name: customer-service
+    env_file:
+      - .env
+    ports:
+      - "8093:8091"    # Cambiado a 8093 en el host
+    depends_on:
+      - common-migrate
+      - auth-service
+    restart: unless-stopped
+
+volumes:
+  mysql-data:

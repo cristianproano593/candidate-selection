@@ -1,0 +1,12 @@
+[
+  {
+    "name": "mservice-customer",
+    "image": "445444484464.dkr.ecr.us-east-2.amazonaws.com/test/mservice-customer:latest",
+    "portMappings": [
+      {
+        "containerPort": 8082,
+        "protocol": "tcp"
+      }
+    ]
+  }
+]

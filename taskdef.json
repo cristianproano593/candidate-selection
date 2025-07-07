@@ -1,0 +1,67 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:us-east-2:445444484464:task-definition/mservice-auth:2",
+    "containerDefinitions": [
+       {
+  "name": "mservice-auth",
+  "image": "445444484464.dkr.ecr.us-east-2.amazonaws.com/test/mservice-auth:latest",
+  "cpu": 0,
+  "essential": true,
+  "portMappings": [
+    {
+      "containerPort": 8090,
+      "protocol": "tcp"
+    }
+  ],
+  "environment": [
+    { "name": "DB_HOST",        "value": "bdd-users.clwoggwyavt1.us-east-2.rds.amazonaws.com" },
+    { "name": "DB_PORT",        "value": "3306" },
+    { "name": "DB_NAME",        "value": "bdd_users" },
+    { "name": "DB_USER",        "value": "root" },
+    { "name": "DB_PASS",        "value": "P#adad7#" },
+    { "name": "JWT_SECRET",     "value": "NjhQeFJ3Rm9WQzYwVFhKc2RtU1pRUFphUXhqclEzUHc=" },
+    { "name": "JWT_EXPIRATION_MS","value": "3600000" }
+  ],
+  "logConfiguration": {
+    "logDriver": "awslogs",
+    "options": {
+      "awslogs-group": "/ecs/mservice-auth",
+      "awslogs-region": "us-east-2",
+      "awslogs-stream-prefix": "ecs"
+    }
+  }
+}
+    ],
+    "family": "mservice-auth",
+    "executionRoleArn": "arn:aws:iam::445444484464:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 2,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "registeredAt": "2025-07-07T08:53:37.002Z",
+    "registeredBy": "arn:aws:iam::445444484464:user/magicone",
+    "tags": []
+}
